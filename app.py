@@ -61,7 +61,7 @@ if not isinstance(agent_executor, AgentExecutor):
     )
 
 # --- Streamlit UI Setup ---
-st.set_page_config(page_title="⌚ Watch Data Analyst", layout="wide")
+st.set_page_config(page_title="⌚ Available Data Fields", layout="wide")
 st.title("⌚ AI Analytics")
 
 # --- Column Descriptions Sidebar ---
