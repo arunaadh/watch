@@ -24,7 +24,7 @@ try:
     # For persistent SSL issues on corporate networks, setting this env var can help.
     # It tells httpx (used by OpenAI's client) to not verify SSL certificates.
     # os.environ["HTTPX_OPTIONAL_CLIENT_TLS_VERIFY"] = "0" # "0" or "false" to disable verification
-    #st.warning("⚠️ SSL verification for HTTPX (used by OpenAI API) is bypassed via environment variable. Use only for local development.")
+    # st.warning("⚠️ SSL verification for HTTPX (used by OpenAI API) is bypassed via environment variable. Use only for local development.")
 
     # --- IMPORTANT: Check and set proxy environment variables if you are behind a corporate proxy ---
     # If your organization uses an HTTP/HTTPS proxy, ensure these environment variables are set
@@ -36,9 +36,9 @@ try:
     # set HTTPS_PROXY=http://your.proxy.com:8080
     # If you have specific proxy credentials:
     # export HTTPS_PROXY="http://user:password@your.proxy.com:8080"
-    #if os.getenv("HTTP_PROXY") or os.getenv("HTTPS_PROXY"):
-    #    st.info(f"Detected HTTP_PROXY: {os.getenv('HTTP_PROXY')} and HTTPS_PROXY: {os.getenv('HTTPS_PROXY')}. Ensure these are correct for your network.")
-    #else:
+    # if os.getenv("HTTP_PROXY") or os.getenv("HTTPS_PROXY"):
+    #     st.info(f"Detected HTTP_PROXY: {os.getenv('HTTP_PROXY')} and HTTPS_PROXY: {os.getenv('HTTPS_PROXY')}. Ensure these are correct for your network.")
+    # else:
     #    st.info("No HTTP_PROXY or HTTPS_PROXY environment variables detected. If you are behind a corporate proxy, you might need to set them.")
 
     http_client = httpx.Client(verify=False) # Create the client to inject into ChatOpenAI
@@ -77,11 +77,16 @@ llm = ChatOpenAI(
 
 # --- LangChain SQL Agent ---
 toolkit = SQLDatabaseToolkit(db=db, llm=llm)
-agent_executor = create_sql_agent(llm=llm, toolkit=toolkit, verbose=True)
+agent_executor = create_sql_agent(
+    llm=llm,
+    toolkit=toolkit,
+    verbose=True,
+    handle_parsing_errors=True # <--- ADDED THIS LINE
+)
 
 # --- Streamlit UI ---
 st.set_page_config(page_title="⌚ Watch Data Analyst", layout="wide")
-st.title("⌚ AI Analytics")
+st.title("⌚ AI Business Analyst for Watch Data")
 
 # Show schema in sidebar
 with engine.connect() as conn:
@@ -143,7 +148,7 @@ if st.session_state.user_query_submitted:
             st.success("Analysis Result:")
             st.markdown(result)
 
-            # --- MODIFIED: Get SQL Query and Parse it with more robust regex ---
+            # --- Get SQL Query and Parse it with more robust regex ---
             sql_prompt = (
                 f"Generate only the PostgreSQL query for the following question, "
                 f"do not include any other text or explanation. "
