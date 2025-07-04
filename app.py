@@ -23,7 +23,7 @@ try:
     # Ensure httpx is installed: pip install httpx
     # For persistent SSL issues on corporate networks, setting this env var can help.
     # It tells httpx (used by OpenAI's client) to not verify SSL certificates.
-    os.environ["HTTPX_OPTIONAL_CLIENT_TLS_VERIFY"] = "0" # "0" or "false" to disable verification
+    # os.environ["HTTPX_OPTIONAL_CLIENT_TLS_VERIFY"] = "0" # "0" or "false" to disable verification
     #st.warning("⚠️ SSL verification for HTTPX (used by OpenAI API) is bypassed via environment variable. Use only for local development.")
 
     # --- IMPORTANT: Check and set proxy environment variables if you are behind a corporate proxy ---
