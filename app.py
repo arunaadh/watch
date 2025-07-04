@@ -38,7 +38,7 @@ db = SQLDatabase(engine=engine)
 # --- OpenAI Chat LLM Setup ---
 llm = ChatOpenAI(
     temperature=0,
-    model="gpt-4",
+    model="gpt-3.5-turbo",
     openai_api_key=OPENAI_API_KEY,
     http_client=http_client
 )
