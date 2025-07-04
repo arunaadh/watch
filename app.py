@@ -16,7 +16,7 @@ import re
 
 # --- Configure HTTPX to bypass SSL verification (for dev only) ---
 # os.environ["HTTPX_OPTIONAL_CLIENT_TLS_VERIFY"] = "0"
-# http_client = httpx.Client(verify=False)
+http_client = httpx.Client(verify=False)
 
 # --- Load environment variables ---
 load_dotenv()
